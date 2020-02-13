@@ -173,10 +173,11 @@
     justify-content: space-between;
     flex-wrap: wrap;
     & .grid {
+        width: 100%;
         display: grid;
         margin-bottom: 2rem;
-        grid-template-columns: 25rem 25rem 25rem 25rem;
-        grid-template-rows: 20rem 20rem;
+        grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+        grid-template-rows: inherit;
         grid-column-gap: 2rem;
         grid-row-gap: 2rem;
         & .card {
@@ -184,7 +185,7 @@
         width: 100%;
         display: -ms-flexbox;
         display: grid;
-        padding: 2rem 4rem;
+        padding: 4rem;
         box-shadow: 0 0 0.8rem -0.3rem cadetblue;
         grid-template-columns: auto auto;
         grid-template-rows: auto;
@@ -247,6 +248,7 @@
 <script>
 import { eventBus } from '../main'
 import { equipmentEventBus } from '../eventBus/equipment'
+// import { mapGetters } from 'vuex'
 export default {
   data: function () {
     return {
@@ -264,6 +266,8 @@ export default {
     }
   },
   created () {
+    this.currentPage = this.$store.getters.getCurrentPage
+    console.log('getCurrentPage', this.currentPage, this.$store.getters.getCurrentPage)
     this.getEquipments('').then(res => {
       if (typeof res === 'string') {
         this.error = res
@@ -272,7 +276,8 @@ export default {
         this.error = ''
         this.equipments = res
       }
-      this.paginate(1)
+      console.log('getCurrentPage 1')
+      this.paginate(this.currentPage)
     })
     eventBus.$on('searchQuery', (searchQuery) => {
       this.getEquipments(searchQuery).then(res => {
@@ -284,7 +289,8 @@ export default {
           this.equipments = res
         }
         this.searchQuery = searchQuery
-        this.paginate(1)
+        console.log('getCurrentPage 2')
+        this.paginate(this.currentPage)
       })
     })
 
@@ -298,7 +304,8 @@ export default {
           this.equipments = res
         }
         this.searchQuery = ''
-        this.paginate(1)
+        console.log('getCurrentPage 3')
+        this.paginate(this.currentPage)
       })
     })
   },
@@ -340,6 +347,8 @@ export default {
         })
     },
     paginate (pageNum) {
+      console.log('paginate 1')
+      this.$store.dispatch('setCurrentPage', pageNum)
       if (Number((this.equipments.length / this.pageSize)) > Number((this.equipments.length / this.pageSize).toString().split('.')[0])) {
         this.pageCount = Number((this.equipments.length / this.pageSize).toString().split('')[0]) + 1
       } else {
@@ -352,7 +361,7 @@ export default {
       }
       this.currentPage = pageNum
       console.log('pageNum', pageNum, this.equipments)
-      console.log('this.equipments / 3', Number((this.equipments.length / 3).toString().split('')[0]))
+      console.log('this.equipments / 3', Number((this.equipments.length / this.pageSize).toString().split('')[0]))
       this.paginatedEquipments = this.equipments.slice((pageNum - 1) * this.pageSize, pageNum * this.pageSize)
       const pageArray = new Array(this.pageCount)
       let newArray = []
@@ -365,6 +374,9 @@ export default {
     }
   },
   computed: {
+    // ...mapGetters({
+    //   currentPage: 'getCurrentNumber'
+    // })
   }
 }
 </script>
