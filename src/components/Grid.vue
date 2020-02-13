@@ -28,7 +28,7 @@
       </div>
     </div>
     <app-confirmation v-if="showModal" @close="showModal = false" @delete="deleteEquipment()"></app-confirmation>
-      <div class="pagination">
+      <div class="pagination" v-if="equipments.length > 0">
          <button @click="paginate(currentPage-1)" :disabled="currentPage === 1">&laquo;</button>
          <button v-for="(page, i) in pages" :key="i" @click="paginate(page)" :class="{'active': currentPage === page}">{{ page }}</button>
          <button @click="paginate(currentPage+1)" :disabled="currentPage === pages.length">&raquo;</button>
@@ -169,9 +169,6 @@
     width: 70vw;
     margin: auto;
     padding: 3rem 0;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
     & .grid {
         width: 100%;
         display: grid;

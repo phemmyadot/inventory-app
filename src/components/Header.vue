@@ -25,13 +25,10 @@
         font-size: 1.1rem;
         width: 100%;
         & .top {
-            width: 50%;
+            width: 30rem;
             margin: auto;
-            padding-top: 3rem;
-            display: flex;
-            justify-content: center;
+            margin-top: 3rem;
             & .search {
-                flex-basis: 76%;
                 position: relative;
                 & .search-input {
                     height: 4rem;

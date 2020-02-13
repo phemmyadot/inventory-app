@@ -104,12 +104,13 @@
 .create-page {
     & .create-form {
         font-size: 1.1rem;
-        width: 50%;
+        width: 70vw;
         margin: 5rem auto;
         & .form {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            display: grid;
+            grid-template-rows: auto;
+            grid-template-columns: 45% 45%;
+            grid-column-gap: 10%;
             & .form-input {
                 display: grid;
                 flex-basis: 48%;
@@ -132,12 +133,12 @@
                 }
             }
             & .name {
-                flex-basis: 100%;
+                grid-column: 1/ span 2;
             }
         }
         & .submit-btn {
+          display: grid;
           justify-content: center;
-          display: flex;
         }
     }
 }

@@ -17,16 +17,17 @@
 
 <style lang="scss" scoped>
     .nav {
-      font-size: 1.1rem;
-      display: flex;
-      justify-content: space-between;
-      box-shadow: 0 0 0.8rem .1rem cadetblue;
-      height: 6rem;
+          font-size: 1.1rem;
+          display: grid;
+          grid-template-columns: 15rem auto;
+          box-shadow: 0 0 0.8rem 0.1rem cadetblue;
+          height: 6rem;
       & .menu {
-        display: flex;
-        justify-content: flex-end;
-        flex-basis: 90%;
+          display: grid;
+          grid-template-columns: auto auto;
+          justify-content: flex-end;
         & button {
+            padding: 0 4rem;
             background-color: #fff;
             flex-basis: 10%;
             color: #0c7a7d;
@@ -43,10 +44,8 @@
         }
       }
       & .company {
-        display: flex;
-        color: #0c7a7d;
-        padding: 0 3rem;
-        align-items: center;
+        padding: 0 4rem;
+        width: auto;
         background-color: #fff;
         border: none;
         cursor: pointer;
