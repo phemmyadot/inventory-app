@@ -26,6 +26,7 @@
 
 <style lang="scss">
 .modal-mask {
+  font-size: 1rem;
   position: fixed;
   z-index: 9998;
   top: 0;
@@ -52,12 +53,12 @@
             & .buttons {
                 margin-top: 2rem;
                 & .modal-default-button {
+                    cursor: pointer;
                     border: .1rem solid grey;
                     border-radius: .5rem;
                     background-color: white;
                     margin: 0 .5rem;
                     padding: .2rem .5rem;
-                    font-size: 1rem;
                 }
 
                 & .modal-danger-button {
@@ -67,7 +68,7 @@
                     color: #b50505;
                     margin: 0 .5rem;
                     padding: .2rem .5rem;
-                    font-size: 1rem;
+                    cursor: pointer;
                 }
             }
         }

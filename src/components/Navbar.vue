@@ -1,6 +1,6 @@
 <template>
     <div class="nav" v-if="isAuth">
-      <p class="company">Company X</p>
+      <button class="company" @click="navigateToHome()">Company X</button>
       <div class="menu">
         <button class="home" @click="navigateToHome()" v-if="this.$route.path !== '/'">
                Home
@@ -17,31 +17,42 @@
 
 <style lang="scss" scoped>
     .nav {
+      font-size: 1.1rem;
       display: flex;
       justify-content: space-between;
-      box-shadow: 0 0 0.8rem -0.3rem rgba(0, 0, 0, 0.75);
+      box-shadow: 0 0 0.8rem .1rem cadetblue;
       height: 6rem;
       & .menu {
         display: flex;
         justify-content: flex-end;
         flex-basis: 90%;
         & button {
+            background-color: #fff;
             flex-basis: 10%;
             border: none;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: 0 0 0.8rem -0.3rem rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 0.8rem -0.3rem cadetblue;
         }
         & button:hover {
-            background-color: #e5e6e9;
-            transform: scale(1.05);
+            background-color: #eff3f3;
+            transform: scale(1.03);
         }
       }
       & .company {
-        margin: auto;
-        font-size: 1.5rem;
+        display: flex;
+        padding: 0 3rem;
+        align-items: center;
+        background-color: #fff;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 0 0.8rem -0.3rem cadetblue;
+      }
+      & .company:hover {
+        background-color: #eff3f3;
+        transform: scale(1.03);
       }
     }
 </style>

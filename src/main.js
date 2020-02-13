@@ -10,7 +10,6 @@ import ConfirmationModal from './components/confimationModal.vue'
 import VueResource from 'vue-resource'
 import HelloJs from 'hellojs/dist/hello.all.min.js'
 import VueHello from 'vue-hellojs'
-import VuejsPaginate from 'vuejs-paginate'
 import { ValidationProvider, extend } from 'vee-validate'
 import { required } from 'vee-validate/dist/rules'
 
@@ -36,7 +35,6 @@ Vue.component('app-grid', Grid)
 Vue.component('app-nav', Navbar)
 Vue.component('validation-provider', ValidationProvider)
 Vue.component('app-confirmation', ConfirmationModal)
-Vue.component('paginate', VuejsPaginate)
 
 // Content-Type: application/json
 

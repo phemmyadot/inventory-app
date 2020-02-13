@@ -48,7 +48,7 @@
 }
 .create-page {
     & .create-form {
-        font-size: 1.4rem;
+        font-size: 1.1rem;
         width: 50%;
         margin: 5rem auto;
         & .form {
@@ -102,6 +102,7 @@
 </style>
 
 <script>
+import { equipmentEventBus } from '../eventBus/equipment'
 export default {
   data () {
     return {
@@ -130,10 +131,9 @@ export default {
   created () {
     if (this.$route.params.id) {
       this.isLoading = true
-      this.$http.get(`http://etestapi.test.eminenttechnology.com/api/Equipment/${this.$route.params.id}`)
+      equipmentEventBus.getEquipment(this.$route.params.id)
         .then(response => response.json())
         .then(json => {
-          console.log('equipment', json)
           this.equipment.equipmentName = json.name
           this.equipment.equipmentQuantity = json.quantity
           this.equipment.equipmentType = json.type
@@ -159,13 +159,13 @@ export default {
         payload = {
           id: this.$route.params.id,
           name: this.equipment.equipmentName,
-          status: this.equipment.equipmentStatus || 0,
-          statusName: this.equipment.equipmentStatusName || 'Created',
+          status: 0,
+          statusName: 'Created',
           type: this.equipment.equipmentType,
           quantity: +this.equipment.equipmentQuantity,
           typeName: this.equipment.equipmentTypeName
         }
-        this.$http.put(`http://etestapi.test.eminenttechnology.com/api/Equipment/${this.$route.params.id}`, payload)
+        equipmentEventBus.editEquipment(this.$route.params.id, payload)
           .then(res => {
             this.$router.push('/')
             this.isLoading = true
@@ -177,13 +177,13 @@ export default {
       } else {
         payload = {
           name: this.equipment.equipmentName,
-          status: this.equipment.equipmentStatus || 0,
-          statusName: this.equipment.equipmentStatusName || 'Creaded',
+          status: 0,
+          statusName: 'Created',
           type: this.equipment.equipmentType,
           quantity: +this.equipment.equipmentQuantity,
           typeName: this.equipment.equipmentTypeName
         }
-        this.$http.post('http://etestapi.test.eminenttechnology.com/api/Equipment', payload)
+        equipmentEventBus.createEquipment(payload)
           .then(res => {
             this.$router.push('/')
             this.isLoading = true

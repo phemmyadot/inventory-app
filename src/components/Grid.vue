@@ -1,10 +1,13 @@
 <template>
-<div class="grid">
-    <div class="list" v-for="(equipment, i) in paginatedEquipments" :key="i">
+<div class="container">
+    <p class="search-query" v-if="searchQuery !== ''">Filtering by Equipment Name: '{{ searchQuery }}'</p>
+    <p class="error" v-if="error !== ''">{{ error }}</p>
+    <div class="grid">
+      <div class="card" v-for="(equipment, i) in paginatedEquipments" :key="i">
         <div class="data">
-            <p class="name">Name: {{ equipment.name }}</p>
-            <p class="quantity">Quantity: {{ equipment.quantity }}</p>
-            <p class="status">Status: {{ equipment.statusName }}</p>
+          <p class="name">Name: {{ equipment.name }}</p>
+          <p class="quantity">Quantity: {{ equipment.quantity }}</p>
+          <p class="status">Status: {{ equipment.statusName }}</p>
         </div>
         <div class="actions">
             <button class="edit" @click="editEquipment(equipment)">
@@ -14,25 +17,15 @@
                 <img src="./../assets/bin.svg" alt="">
             </button>
         </div>
-    </div>
-    <p class="error" v-if="error !== ''">{{ error }}</p>
-    <app-confirmation v-if="showModal" @close="showModal = false" @delete="deleteEquipment()"></app-confirmation>
-    <div class="pagination">pagination</div>
-    <div class="loading" v-if="isLoading">Loading&#8230;</div>
-     <!-- <paginate
-      :page-count="pageCount"
-      :container-class="'pagination'"
-      :prev-text="'prev'"
-      :next-text="'next'"
-      :click-handler="paginate">
-    </paginate> -->
-    <div class="center">
-      <div class="pagination">
-         <button @click="paginate(currentPage-1)" :disabled="currentPage === 1">&laquo;</button>
-        <button v-for="(page, i) in pages" :key="i" @click="paginate(page)">{{ page }}</button>
-         <button @click="paginate(currentPage+1)" :disabled="currentPage === pages.length">&raquo;</button>
       </div>
     </div>
+    <app-confirmation v-if="showModal" @close="showModal = false" @delete="deleteEquipment()"></app-confirmation>
+      <div class="pagination">
+         <button @click="paginate(currentPage-1)" :disabled="currentPage === 1">&laquo;</button>
+         <button v-for="(page, i) in pages" :key="i" @click="paginate(page)" :class="{'active': currentPage === page}">{{ page }}</button>
+         <button @click="paginate(currentPage+1)" :disabled="currentPage === pages.length">&raquo;</button>
+      </div>
+    <div class="loading" v-if="isLoading">Loading&#8230;</div>
 </div>
 </template>
 
@@ -86,8 +79,8 @@
   -o-animation: spinner 1500ms infinite linear;
   animation: spinner 1500ms infinite linear;
   border-radius: 0.5em;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
-  box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+  -webkit-box-shadow: cadetblue 1.5em 0 0 0, cadetblue 1.1em 1.1em 0 0, cadetblue 0 1.5em 0 0, cadetblue -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, cadetblue 0 -1.5em 0 0, cadetblue 1.1em -1.1em 0 0;
+  box-shadow: cadetblue 1.5em 0 0 0, cadetblue 1.1em 1.1em 0 0, cadetblue 0 1.5em 0 0, cadetblue -1.1em 1.1em 0 0, cadetblue -1.5em 0 0 0, cadetblue -1.1em -1.1em 0 0, cadetblue 0 -1.5em 0 0, cadetblue 1.1em -1.1em 0 0;
 }
 
 /* Animation */
@@ -158,24 +151,32 @@
 }
 
 /* Grid */
-.grid {
+.container {
+    font-size: 1.1rem;
     width: 50%;
     margin: auto;
     padding: 3rem 0;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    & .list {
+    & .grid {
+       width: 100%;
+       display: flex;
+       flex-wrap: wrap;
+       justify-content: space-between;
+       height: 35rem;
+       margin-bottom: 2rem;
+       align-content: flex-start;
+       & .card {
         flex-basis: 48%;
-        border-bottom: .3rem solid #9797bb;
+        border-bottom: .3rem solid cadetblue;
         width: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 1.3rem;
         padding: 2rem;
         margin: 1rem 0;
-        box-shadow: 0 0 0.8rem -0.3rem rgba(0, 0, 0, 0.75);
+        box-shadow: 0 0 0.8rem -0.3rem cadetblue;
         & .actions {
             flex-basis: 10%;
             & .edit, .delete {
@@ -200,24 +201,46 @@
             }
         }
     }
+    }
     & .pagination {
         display: flex;
         flex-basis: 100%;
         justify-content: center;
         margin: 2rem 0;
-        font-size: 1.3rem;
+        & button {
+          cursor: pointer;
+          padding: .7rem 1.5rem;
+          background-color: #fff;
+          color: cadetblue;
+          border: .1rem solid cadetblue;
+          box-shadow: 0 0 0.8rem -0.3rem cadetblue;
+        }
+        & button:disabled {
+          cursor: not-allowed;
+          background-color: #eff3f3;
+        }
+        & .active {
+          background-color: cadetblue;
+          color: #fff;
+          border: .1rem solid cadetblue;
+        }
     }
     & .error {
         text-align: center;
         width: 100%;
-        font-size: 1.3rem;
         color: #e60000;
+    }
+    & .search-query {
+      text-align: center;
+      width: 100%;
+      margin-bottom: 1rem;
     }
 }
 </style>
 
 <script>
 import { eventBus } from '../main'
+import { equipmentEventBus } from '../eventBus/equipment'
 export default {
   data: function () {
     return {
@@ -230,55 +253,55 @@ export default {
       showModal: false,
       pageCount: 0,
       pages: [],
-      currentPage: 1
+      currentPage: 1,
+      pageSize: 6
     }
   },
   created () {
     this.getEquipments('').then(res => {
-      console.log('resss', res)
-      this.equipments = res
+      if (typeof res === 'string') {
+        this.error = res
+        this.equipments = []
+      } else {
+        this.error = ''
+        this.equipments = res
+      }
       this.paginate(1)
     })
     eventBus.$on('searchQuery', (searchQuery) => {
-      this.getEquipments(searchQuery)
+      this.getEquipments(searchQuery).then(res => {
+        if (typeof res === 'string') {
+          this.error = res
+          this.equipments = []
+        } else {
+          this.error = ''
+          this.equipments = res
+        }
+        this.searchQuery = searchQuery
+        this.paginate(1)
+      })
     })
 
     eventBus.$on('resetFilter', (isReset) => {
-      this.getEquipments('')
+      this.getEquipments('').then(res => {
+        if (typeof res === 'string') {
+          this.error = res
+          this.equipments = []
+        } else {
+          this.error = ''
+          this.equipments = res
+        }
+        this.searchQuery = ''
+        this.paginate(1)
+      })
     })
   },
   methods: {
     getEquipments (searchQuery) {
       this.isLoading = true
-      if (searchQuery === '') {
-        return this.$http.get('http://etestapi.test.eminenttechnology.com/api/Equipment')
-          .then(response => response.json())
-          .then(json => {
-            return json
-          })
-          .catch(err => {
-            if (err.status === 404) {
-              this.equipments = []
-              this.error = err.body
-              this.isLoading = false
-            }
-          })
-      } else {
-        return this.$http.get(`http://etestapi.test.eminenttechnology.com/api/Equipment/search?name=${searchQuery}`)
-          .then(response => {
-            return response.json()
-          })
-          .then(json => {
-            return json
-          })
-          .catch(err => {
-            if (err.status === 404) {
-              this.equipments = []
-              this.error = err.body
-              this.isLoading = false
-            }
-          })
-      }
+      return equipmentEventBus.getEquipments(searchQuery).then(res => {
+        return res
+      })
     },
     editEquipment (equipment) {
       this.$router.push('/create/' + equipment.id)
@@ -289,11 +312,20 @@ export default {
     },
     deleteEquipment () {
       this.isLoading = true
-      this.$http.delete(`http://etestapi.test.eminenttechnology.com/api/Equipment/${this.equipment.id}`)
+      equipmentEventBus.deleteEquipment(this.equipment.id)
         .then(res => {
           this.isLoading = false
           this.showModal = false
-          this.getEquipments('')
+          this.getEquipments('').then(res => {
+            if (typeof res === 'string') {
+              this.error = res
+              this.equipments = []
+            } else {
+              this.error = ''
+              this.equipments = res
+            }
+            this.paginate(1)
+          })
         })
         .catch(err => {
           console.log(err)
@@ -302,10 +334,10 @@ export default {
         })
     },
     paginate (pageNum) {
-      if (Number((this.equipments.length / 3)) > Number((this.equipments.length / 3).toString().split('')[0])) {
-        this.pageCount = Number((this.equipments.length / 3).toString().split('')[0]) + 1
+      if (Number((this.equipments.length / this.pageSize)) > Number((this.equipments.length / this.pageSize).toString().split('.')[0])) {
+        this.pageCount = Number((this.equipments.length / this.pageSize).toString().split('')[0]) + 1
       } else {
-        this.pageCount = Number((this.equipments.length / 3))
+        this.pageCount = Number((this.equipments.length / this.pageSize))
       }
       if (pageNum < 1) {
         pageNum = 1
@@ -315,7 +347,7 @@ export default {
       this.currentPage = pageNum
       console.log('pageNum', pageNum, this.equipments)
       console.log('this.equipments / 3', Number((this.equipments.length / 3).toString().split('')[0]))
-      this.paginatedEquipments = this.equipments.slice((pageNum - 1) * 3, pageNum * 3)
+      this.paginatedEquipments = this.equipments.slice((pageNum - 1) * this.pageSize, pageNum * this.pageSize)
       const pageArray = new Array(this.pageCount)
       let newArray = []
       for (var i = 0; i < pageArray.length; i++) {
@@ -323,16 +355,10 @@ export default {
       }
       this.pages = newArray
       newArray = []
-      this.error = ''
       this.isLoading = false
     }
   },
   computed: {
-    filteredEquipments () {
-      return this.equipments.filter(equipment => {
-        return equipment.name.match('this.searchQuery')
-      })
-    }
   }
 }
 </script>

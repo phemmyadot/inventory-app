@@ -19,6 +19,7 @@
 
 <style lang="scss">
     .header {
+        font-size: 1.1rem;
         width: 100%;
         & .top {
             width: 50%;
@@ -31,51 +32,38 @@
                 position: relative;
                 & .search-input {
                     height: 4rem;
+                    font-size: 1.1rem;
                     width: 100%;
                     padding: 0 5rem;;
                     border-radius: .5rem;
-                    border: .1rem solid grey;
-                    box-shadow: 0 0 0.8rem -0.3rem rgba(0, 0, 0, 0.75);
+                    border: .1rem solid cadetblue;
+                    box-shadow: 0 0 0.8rem -0.3rem cadetblue;
                 }
-                & .reset-button {
+                & button {
+                    font-size: 1.1rem;
                     position: absolute;
+                    color: cadetblue;
                     right: 0;
                     top: 0;
                     height: 4rem;
                     width: 5rem;;
-                    border: .1rem grey solid;
+                    border: .1rem cadetblue solid;
                     border-radius: 0 .5rem .5rem 0;
                     justify-content: center;
                     display: flex;
                     cursor: pointer;
-                    & .reset-icon {
+                    & img {
                         width: 2rem;
                         height: 2rem;
                     }
                 }
-                & .reset-button:hover {
-                    background-color: rgb(204, 206, 231);
+                & button:hover {
+                    background-color: cadetblue;
+                    color: #fff;
                     transform: scale(1.05);
                 }
                 & .search-button {
-                    position: absolute;
-                    right: 5rem;;
-                    top: 0;
-                    height: 4rem;
-                    width: 5rem;;
-                    border: .1rem grey solid;
-                    border-right: none;
-                    justify-content: center;
-                    display: flex;
-                    cursor: pointer;
-                    & .search-icon {
-                        width: 2rem;
-                        height: 2rem;
-                    }
-                }
-                & .search-button:hover {
-                    background-color: rgb(204, 206, 231);
-                    transform: scale(1.05);
+                    right: 5rem;
                 }
             }
         }
