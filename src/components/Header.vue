@@ -25,7 +25,7 @@
         font-size: 1.1rem;
         width: 100%;
         & .top {
-            width: 30rem;
+            width: 45rem;
             margin: auto;
             margin-top: 3rem;
             & .search {
@@ -66,6 +66,17 @@
                         border-radius: 0;
                 }
                 }
+            }
+        }
+    }
+    @media screen and (max-width: 480px) {
+        .top {
+            width: 20rem !important;
+        }
+        .nav {
+            grid-template-columns: 35% 65% !important;
+            & .menu {
+                grid-template-columns: 50% 50% !important;
             }
         }
     }

@@ -49,15 +49,9 @@ export default {
       const hello = this.hello
       hello(network).login().then(() => {
         const authRes = hello(network).getAuthResponse()
-        /*
-          performs operations using the token from authRes
-        */
         localStorage.setItem('ACCESS_TOKEN', 'Bearer' + ' ' + authRes.access_token)
         return hello(network).api('me').then(function (json) {
           const profile = json
-          /*
-            performs operations using the user info from profile
-          */
           localStorage.setItem('USER_NAME', profile.name)
           localStorage.setItem('USER_PICTURE', profile.picture)
         })

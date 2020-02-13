@@ -24,7 +24,7 @@
           height: 6rem;
       & .menu {
           display: grid;
-          grid-template-columns: auto auto;
+          grid-template-columns: auto auto auto;
           justify-content: flex-end;
         & button {
             padding: 0 4rem;

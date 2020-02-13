@@ -14,7 +14,7 @@
   outline: none;
 }
   html {
-    font-size: 10px !important;
+    font-size: 80% !important;
     font-family: sans-serif !important;
   }
 

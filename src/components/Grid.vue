@@ -173,7 +173,7 @@
         width: 100%;
         display: grid;
         margin-bottom: 2rem;
-        grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
         grid-template-rows: inherit;
         grid-column-gap: 2rem;
         grid-row-gap: 2rem;
@@ -210,7 +210,7 @@
         display: flex;
         flex-basis: 100%;
         justify-content: center;
-        margin: 2rem 0;
+        margin: 4rem 0;
         & button {
           cursor: pointer;
           padding: .7rem 1.5rem;
@@ -239,6 +239,11 @@
       width: 100%;
       margin-bottom: 1rem;
     }
+}
+@media screen and (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)) !important;
+  }
 }
 </style>
 
