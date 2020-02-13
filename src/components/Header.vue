@@ -6,18 +6,21 @@
     <div class="top">
         <div class="search" v-if="this.$route.path == '/'">
             <input type="text" class="search-input" placeholder="Enter Search Query" v-model="searchQuery">
-            <button class="search-button" @click="filterEquipments()" v-if="searchQuery !== ''">
-                <img src="./../assets/search.svg" class="search-icon" alt="">
-            </button>
-            <button class="reset-button" @click="resetFilter()">
-                Reset
-            </button>
+            <v-app id="inspire" class="buttons">
+                <v-btn small class="search-btn" @click="filterEquipments()" v-if="searchQuery !== ''">
+                    <v-icon>mdi-magnify</v-icon>
+                </v-btn>
+                <v-btn small @click="resetFilter()">
+                    <v-icon>mdi-cached</v-icon>
+                </v-btn>
+            </v-app>
         </div>
     </div>
 </div>
 </template>
 
 <style lang="scss">
+
     .header {
         font-size: 1.1rem;
         width: 100%;
@@ -39,31 +42,32 @@
                     border: .1rem solid cadetblue;
                     box-shadow: 0 0 0.8rem -0.3rem cadetblue;
                 }
-                & button {
-                    font-size: 1.1rem;
+                & .buttons {
+                    background: #FFFFFF;
                     position: absolute;
-                    color: cadetblue;
-                    right: 0;
+                    color: rgba(0, 0, 0, 0.87);
                     top: 0;
-                    height: 4rem;
-                    width: 5rem;;
-                    border: .1rem cadetblue solid;
-                    border-radius: 0 .5rem .5rem 0;
-                    justify-content: center;
-                    display: flex;
-                    cursor: pointer;
-                    & img {
-                        width: 2rem;
-                        height: 2rem;
+                    right: 0;
+                    height: 100%;
+                    & button {
+                        color: cadetblue;
+                        height: 100%;
+                        border: .1rem cadetblue solid;
+                        border-radius: 0 .5rem .5rem 0;
+                        cursor: pointer;
+                        & img {
+                            width: 2rem;
+                            height: 2rem;
+                        }
                     }
+                    & button:hover {
+                        background-color: cadetblue;
+                        transform: scale(1.05);
+                        color: #fff;
+                    }
+                    & .search-btn {
+                        border-radius: 0;
                 }
-                & button:hover {
-                    background-color: cadetblue;
-                    color: #fff;
-                    transform: scale(1.05);
-                }
-                & .search-button {
-                    right: 5rem;
                 }
             }
         }

@@ -17,6 +17,7 @@
     font-size: 10px !important;
     font-family: sans-serif !important;
   }
+
 </style>
 
 <script>

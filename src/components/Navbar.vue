@@ -29,6 +29,7 @@
         & button {
             background-color: #fff;
             flex-basis: 10%;
+            color: #0c7a7d;
             border: none;
             display: flex;
             justify-content: center;
@@ -43,6 +44,7 @@
       }
       & .company {
         display: flex;
+        color: #0c7a7d;
         padding: 0 3rem;
         align-items: center;
         background-color: #fff;

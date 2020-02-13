@@ -21,21 +21,76 @@
                     <div class="form-input">
                         <label for="quantity">Type</label>
                         <validation-provider rules="required" v-slot="{ errors }">
-                            <select name="types" id="" v-model="equipment.equipmentTypeName" :class="{'error': errors[0]}">
+                            <select name="types" class="select-input" v-model="equipment.equipmentTypeName" :class="{'error': errors[0]}">
                                 <option v-for="(type, i) in types" :key="i" :selected="type.selected">{{type.name}}</option>
                             </select>
                         <span class="error-text">{{ errors[0] }}</span>
                         </validation-provider>
                     </div>
                </div>
-               <button class="submit" @click.prevent="postEquipment()" :disabled='!isComplete'>Submit</button>
+               <div class="submit-btn">
+                 <v-app id="inspire">
+                    <v-btn
+                      @click.prevent="postEquipment()"
+                      class="ma-2"
+                      :loading="isLoading"
+                      :disabled="isLoading || !isComplete"
+                      color="info"
+                    >
+                      Submit
+                      <template v-slot:loader>
+                        <span class="custom-loader">
+                          <v-icon light>mdi-cached</v-icon>
+                        </span>
+                      </template>
+                    </v-btn>
+                </v-app>
+               </div>
+               <!-- <button class="submit" :disabled='!isComplete'>Submit</button> -->
            </form>
-        <div class="loading" v-if="isLoading">Loading&#8230;</div>
+        <!-- <div class="loading" v-if="isLoading">Loading&#8230;</div> -->
        </div>
     </div>
 </template>
 
 <style lang="scss">
+.custom-loader {
+  animation: loader 1s infinite;
+  display: flex;
+}
+@-moz-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .error {
     background-color: #fdc8c8;
 }
@@ -72,30 +127,17 @@
                     width: 100%;
                     margin-bottom: 1rem;
                 }
+                & select {
+                 -webkit-appearance: checkbox;
+                }
             }
             & .name {
                 flex-basis: 100%;
             }
         }
-        & .submit {
-            height: 4rem;
-            border: 0;
-            border-radius: .5rem;
-            color: #fff;
-            background-color: #1d66c1;
-            width: 30%;
-            margin: 2rem auto;
-            display: block;
-            cursor: pointer;
-        }
-        & .submit:hover {
-             transform: scale(1.01);
-             background-color: #054592;
-        }
-        & .submit:disabled {
-             transform: scale(1);
-             background-color: #779dcc;
-             cursor: default;
+        & .submit-btn {
+          justify-content: center;
+          display: flex;
         }
     }
 }

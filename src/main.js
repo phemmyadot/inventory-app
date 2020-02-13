@@ -12,6 +12,7 @@ import HelloJs from 'hellojs/dist/hello.all.min.js'
 import VueHello from 'vue-hellojs'
 import { ValidationProvider, extend } from 'vee-validate'
 import { required } from 'vee-validate/dist/rules'
+import vuetify from './plugins/vuetify'
 
 extend('required', {
   ...required,
@@ -41,5 +42,6 @@ Vue.component('app-confirmation', ConfirmationModal)
 new Vue({
   router,
   store,
+  vuetify,
   render: h => h(App)
 }).$mount('#app')

@@ -1,5 +1,5 @@
 <template>
-<div class="container">
+<div class="grid-container">
     <p class="search-query" v-if="searchQuery !== ''">Filtering by Equipment Name: '{{ searchQuery }}'</p>
     <p class="error" v-if="error !== ''">{{ error }}</p>
     <div class="grid">
@@ -10,12 +10,20 @@
           <p class="status">Status: {{ equipment.statusName }}</p>
         </div>
         <div class="actions">
-            <button class="edit" @click="editEquipment(equipment)">
+          <v-app id="inspire">
+            <v-btn text icon class="cadetblue" @click="editEquipment(equipment)">
+              <v-icon>mdi-pencil</v-icon>
+            </v-btn>
+            <v-btn text icon color="error" @click="showConfirmModal(equipment)">
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </v-app>
+            <!-- <button class="edit" @click="editEquipment(equipment)">
                 <img src="./../assets/edit.svg" alt="">
             </button>
             <button class="delete" @click="showConfirmModal(equipment)">
                 <img src="./../assets/bin.svg" alt="">
-            </button>
+            </button> -->
         </div>
       </div>
     </div>
@@ -30,6 +38,7 @@
 </template>
 
 <style lang="scss">
+
 /* Absolute Center Spinner */
 .loading {
   position: fixed;
@@ -150,54 +159,51 @@
   }
 }
 
+.v-application--wrap {
+  min-height: 100% !important;
+  display: contents;
+}
 /* Grid */
-.container {
+.grid-container {
     font-size: 1.1rem;
-    width: 50%;
+    width: 70vw;
     margin: auto;
     padding: 3rem 0;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     & .grid {
-       width: 100%;
-       display: flex;
-       flex-wrap: wrap;
-       justify-content: space-between;
-       height: 35rem;
-       margin-bottom: 2rem;
-       align-content: flex-start;
-       & .card {
-        flex-basis: 48%;
-        border-bottom: .3rem solid cadetblue;
+        display: grid;
+        margin-bottom: 2rem;
+        grid-template-columns: 25rem 25rem 25rem 25rem;
+        grid-template-rows: 20rem 20rem;
+        grid-column-gap: 2rem;
+        grid-row-gap: 2rem;
+        & .card {
+        border-bottom: 0.3rem solid cadetblue;
         width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 2rem;
-        margin: 1rem 0;
+        display: -ms-flexbox;
+        display: grid;
+        padding: 2rem 4rem;
         box-shadow: 0 0 0.8rem -0.3rem cadetblue;
+        grid-template-columns: auto auto;
+        grid-template-rows: auto;
+        align-items: center;
+        justify-content: space-between;
         & .actions {
-            flex-basis: 10%;
-            & .edit, .delete {
-                background: none;
-                border: none;
-                margin: .2rem 0;
-                cursor: pointer;
-                & img {
-                height: 2rem;
-                }
+            & >.v-application {
+              display: grid;
             }
-             & .edit:hover, .delete:hover {
-                transform: scale(1.05);
-                background-color: rgb(236, 233, 233);
+            & .cadetblue {
+              color: cadetblue;
             }
         }
         & .data{
             flex-basis: 90%;
+            color: #0c7a7d;
             & .name, .status, .quantity {
             flex-basis: 30%;
-            margin: .5rem 0;
+            margin: 2rem 0;
             }
         }
     }
@@ -254,7 +260,7 @@ export default {
       pageCount: 0,
       pages: [],
       currentPage: 1,
-      pageSize: 6
+      pageSize: 8
     }
   },
   created () {
