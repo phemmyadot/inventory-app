@@ -339,6 +339,7 @@ export default {
           })
         })
         .catch(err => {
+          this.error = err
           this.isLoading = false
           this.showModal = false
         })
@@ -366,11 +367,6 @@ export default {
       newArray = []
       this.isLoading = false
     }
-  },
-  computed: {
-    // ...mapGetters({
-    //   currentPage: 'getCurrentNumber'
-    // })
   }
 }
 </script>
