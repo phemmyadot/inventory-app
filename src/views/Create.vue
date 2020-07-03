@@ -168,7 +168,8 @@ export default {
           value: 1
         }
       ],
-      isLoading: false
+      isLoading: false,
+      error: ''
     }
   },
   created () {
@@ -196,7 +197,6 @@ export default {
     postEquipment () {
       this.isLoading = true
       this.equipment.equipmentTypeName === 'Indoor' ? this.equipment.equipmentType = 0 : this.equipment.equipmentType = 1
-      console.log(this.equipment)
       let payload = []
       if (this.$route.params.id) {
         payload = {
@@ -214,7 +214,7 @@ export default {
             this.isLoading = true
           })
           .catch(err => {
-            console.log(err)
+            this.error = err
             this.isLoading = true
           })
       } else {
@@ -232,7 +232,7 @@ export default {
             this.isLoading = true
           })
           .catch(err => {
-            console.log(err)
+            this.error = err
             this.isLoading = true
           })
       }
