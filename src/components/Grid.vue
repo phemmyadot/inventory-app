@@ -269,7 +269,6 @@ export default {
   },
   created () {
     this.currentPage = this.$store.getters.getCurrentPage
-    console.log('getCurrentPage', this.currentPage, this.$store.getters.getCurrentPage)
     this.getEquipments('').then(res => {
       if (typeof res === 'string') {
         this.error = res
@@ -278,7 +277,6 @@ export default {
         this.error = ''
         this.equipments = res
       }
-      console.log('getCurrentPage 1')
       this.paginate(this.currentPage)
     })
     eventBus.$on('searchQuery', (searchQuery) => {
@@ -291,7 +289,6 @@ export default {
           this.equipments = res
         }
         this.searchQuery = searchQuery
-        console.log('getCurrentPage 2')
         this.paginate(this.currentPage)
       })
     })
@@ -306,7 +303,6 @@ export default {
           this.equipments = res
         }
         this.searchQuery = ''
-        console.log('getCurrentPage 3')
         this.paginate(this.currentPage)
       })
     })
@@ -343,13 +339,11 @@ export default {
           })
         })
         .catch(err => {
-          console.log(err)
           this.isLoading = false
           this.showModal = false
         })
     },
     paginate (pageNum) {
-      console.log('paginate 1')
       this.$store.dispatch('setCurrentPage', pageNum)
       if (Number((this.equipments.length / this.pageSize)) > Number((this.equipments.length / this.pageSize).toString().split('.')[0])) {
         this.pageCount = Number((this.equipments.length / this.pageSize).toString().split('')[0]) + 1
@@ -362,8 +356,6 @@ export default {
         pageNum = this.pageCount
       }
       this.currentPage = pageNum
-      console.log('pageNum', pageNum, this.equipments)
-      console.log('this.equipments / 3', Number((this.equipments.length / this.pageSize).toString().split('')[0]))
       this.paginatedEquipments = this.equipments.slice((pageNum - 1) * this.pageSize, pageNum * this.pageSize)
       const pageArray = new Array(this.pageCount)
       let newArray = []
