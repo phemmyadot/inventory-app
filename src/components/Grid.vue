@@ -1,34 +1,30 @@
 <template>
 <div class="grid-container">
-    <p class="search-query" v-if="searchQuery !== ''">Filtering by Equipment Name: '{{ searchQuery }}'</p>
+    <p class="search-query" v-if="searchQuery !== ''">Filtering by Inventory Name: '{{ searchQuery }}'</p>
     <p class="error" v-if="error !== ''">{{ error }}</p>
     <div class="grid">
-      <div class="card" v-for="(equipment, i) in paginatedEquipments" :key="i">
+      <div class="card" v-for="(inventory, i) in paginatedInventories" :key="i">
         <div class="data">
-          <p class="name">Name: {{ equipment.name }}</p>
-          <p class="quantity">Quantity: {{ equipment.quantity }}</p>
-          <p class="status">Status: {{ equipment.statusName }}</p>
+          <p class="name">Name: {{ inventory.name }}</p>
+          <p class="quantity">Available Quantity: {{ inventory.availableQuantity }}</p>
+          <p class="quantity">Stocked Quantity: {{ inventory.stockedQuantity }}</p>
+          <p class="status">Price: {{ inventory.price }}</p>
+          <p class="status">Model: {{ inventory.modelNo }}</p>
         </div>
         <div class="actions">
           <v-app id="inspire">
-            <v-btn text icon class="cadetblue" @click="editEquipment(equipment)">
+            <v-btn text icon class="cadetblue" @click="editInventory(inventory)">
               <v-icon>mdi-pencil</v-icon>
             </v-btn>
-            <v-btn text icon color="error" @click="showConfirmModal(equipment)">
+            <v-btn text icon color="error" @click="showConfirmModal(inventory)">
               <v-icon>mdi-delete</v-icon>
             </v-btn>
           </v-app>
-            <!-- <button class="edit" @click="editEquipment(equipment)">
-                <img src="./../assets/edit.svg" alt="">
-            </button>
-            <button class="delete" @click="showConfirmModal(equipment)">
-                <img src="./../assets/bin.svg" alt="">
-            </button> -->
         </div>
       </div>
     </div>
-    <app-confirmation v-if="showModal" @close="showModal = false" @delete="deleteEquipment()"></app-confirmation>
-      <div class="pagination" v-if="equipments.length > 0">
+    <app-confirmation v-if="showModal" @close="showModal = false" @delete="deleteInventory()"></app-confirmation>
+      <div class="pagination" v-if="inventories.length > 0">
          <button @click="paginate(currentPage-1)" :disabled="currentPage === 1">&laquo;</button>
          <button v-for="(page, i) in pages" :key="i" @click="paginate(page)" :class="{'active': currentPage === page}">{{ page }}</button>
          <button @click="paginate(currentPage+1)" :disabled="currentPage === pages.length">&raquo;</button>
@@ -249,14 +245,14 @@
 
 <script>
 import { eventBus } from '../main'
-import { equipmentEventBus } from '../eventBus/equipment'
+import { inventoryServices } from '../services/inventory.service'
 // import { mapGetters } from 'vuex'
 export default {
   data: function () {
     return {
-      equipment: null,
-      equipments: [],
-      paginatedEquipments: [],
+      inventory: null,
+      inventories: [],
+      paginatedInventories: [],
       searchQuery: '',
       isLoading: true,
       error: '',
@@ -269,24 +265,24 @@ export default {
   },
   created () {
     this.currentPage = this.$store.getters.getCurrentPage
-    this.getEquipments('').then(res => {
+    this.getInventories('').then(res => {
       if (typeof res === 'string') {
         this.error = res
-        this.equipments = []
+        this.inventories = []
       } else {
         this.error = ''
-        this.equipments = res
+        this.inventories = res
       }
       this.paginate(this.currentPage)
     })
     eventBus.$on('searchQuery', (searchQuery) => {
-      this.getEquipments(searchQuery).then(res => {
+      this.getInventories(searchQuery).then(res => {
         if (typeof res === 'string') {
           this.error = res
-          this.equipments = []
+          this.inventories = []
         } else {
           this.error = ''
-          this.equipments = res
+          this.inventories = res
         }
         this.searchQuery = searchQuery
         this.paginate(this.currentPage)
@@ -294,13 +290,13 @@ export default {
     })
 
     eventBus.$on('resetFilter', (isReset) => {
-      this.getEquipments('').then(res => {
+      this.getInventories('').then(res => {
         if (typeof res === 'string') {
           this.error = res
-          this.equipments = []
+          this.inventories = []
         } else {
           this.error = ''
-          this.equipments = res
+          this.inventories = res
         }
         this.searchQuery = ''
         this.paginate(this.currentPage)
@@ -308,32 +304,32 @@ export default {
     })
   },
   methods: {
-    getEquipments (searchQuery) {
+    getInventories (searchQuery) {
       this.isLoading = true
-      return equipmentEventBus.getEquipments(searchQuery).then(res => {
+      return inventoryServices.getInventories(searchQuery).then(res => {
         return res
       })
     },
-    editEquipment (equipment) {
-      this.$router.push('/create/' + equipment.id)
+    editInventory (inventory) {
+      this.$router.push('/create/' + inventory._id)
     },
-    showConfirmModal (equipment) {
-      this.equipment = equipment
+    showConfirmModal (inventory) {
+      this.inventory = inventory
       this.showModal = true
     },
-    deleteEquipment () {
+    deleteInventory () {
       this.isLoading = true
-      equipmentEventBus.deleteEquipment(this.equipment.id)
+      inventoryServices.deleteInventory(this.inventory._id)
         .then(res => {
           this.isLoading = false
           this.showModal = false
-          this.getEquipments('').then(res => {
+          this.getInventories('').then(res => {
             if (typeof res === 'string') {
               this.error = res
-              this.equipments = []
+              this.inventories = []
             } else {
               this.error = ''
-              this.equipments = res
+              this.inventories = res
             }
             this.paginate(1)
           })
@@ -346,10 +342,10 @@ export default {
     },
     paginate (pageNum) {
       this.$store.dispatch('setCurrentPage', pageNum)
-      if (Number((this.equipments.length / this.pageSize)) > Number((this.equipments.length / this.pageSize).toString().split('.')[0])) {
-        this.pageCount = Number((this.equipments.length / this.pageSize).toString().split('')[0]) + 1
+      if (Number((this.inventories.length / this.pageSize)) > Number((this.inventories.length / this.pageSize).toString().split('.')[0])) {
+        this.pageCount = Number((this.inventories.length / this.pageSize).toString().split('')[0]) + 1
       } else {
-        this.pageCount = Number((this.equipments.length / this.pageSize))
+        this.pageCount = Number((this.inventories.length / this.pageSize))
       }
       if (pageNum < 1) {
         pageNum = 1
@@ -357,7 +353,7 @@ export default {
         pageNum = this.pageCount
       }
       this.currentPage = pageNum
-      this.paginatedEquipments = this.equipments.slice((pageNum - 1) * this.pageSize, pageNum * this.pageSize)
+      this.paginatedInventories = this.inventories.slice((pageNum - 1) * this.pageSize, pageNum * this.pageSize)
       const pageArray = new Array(this.pageCount)
       let newArray = []
       for (var i = 0; i < pageArray.length; i++) {

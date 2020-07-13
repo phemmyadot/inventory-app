@@ -7,7 +7,7 @@
         <div class="search" v-if="this.$route.path == '/'">
             <input type="text" class="search-input" placeholder="Enter Search Query" v-model="searchQuery">
             <v-app id="inspire" class="buttons">
-                <v-btn small class="search-btn" @click="filterEquipments()" v-if="searchQuery !== ''">
+                <v-btn small class="search-btn" @click="filterInventories()" v-if="searchQuery !== ''">
                     <v-icon>mdi-magnify</v-icon>
                 </v-btn>
                 <v-btn small @click="resetFilter()">
@@ -90,7 +90,7 @@ export default {
     }
   },
   methods: {
-    filterEquipments () {
+    filterInventories () {
       eventBus.$emit('searchQuery', this.searchQuery)
       this.searchQuery = ''
     },

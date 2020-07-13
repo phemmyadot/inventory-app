@@ -1,13 +1,8 @@
 import Vue from 'vue'
 
-export const equipmentEventBus = new Vue({
-//   data () {
-//     return {
-//       error: ''
-//     }
-//   },
+export const inventoryServices = new Vue({
   methods: {
-    getEquipments (searchQuery) {
+    getInventories (searchQuery) {
       let queryUrl = ''
       if (searchQuery === '') {
         queryUrl = 'https://api-inventory-app.herokuapp.com/inventories'
@@ -17,7 +12,7 @@ export const equipmentEventBus = new Vue({
       return this.$http.get(queryUrl)
         .then(response => response.json())
         .then(json => {
-          return json
+          return json.inventories
         })
         .catch(err => {
           if (err.status === 404) {
@@ -26,16 +21,26 @@ export const equipmentEventBus = new Vue({
           }
         })
     },
-    getEquipment (id) {
+    getInventory (id) {
       return this.$http.get(`https://api-inventory-app.herokuapp.com/inventories/${id}`)
+        .then(response => response.json())
+        .then(json => {
+          return json.inventory
+        })
+        .catch(err => {
+          if (err.status === 404) {
+            this.error = err.body
+            return this.error
+          }
+        })
     },
-    deleteEquipment (id) {
+    deleteInventory (id) {
       return this.$http.delete(`https://api-inventory-app.herokuapp.com/inventories/${id}`)
     },
-    createEquipment (payload) {
+    createInventory (payload) {
       return this.$http.post('https://api-inventory-app.herokuapp.com/inventories', payload)
     },
-    editEquipment (id, payload) {
+    editInventory (id, payload) {
       return this.$http.put(`https://api-inventory-app.herokuapp.com/inventories/${id}`, payload)
     }
   }
