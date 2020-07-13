@@ -10,9 +10,9 @@ export const equipmentEventBus = new Vue({
     getEquipments (searchQuery) {
       let queryUrl = ''
       if (searchQuery === '') {
-        queryUrl = 'http://etestapi.test.eminenttechnology.com/api/Equipment'
+        queryUrl = 'https://api-inventory-app.herokuapp.com/inventories'
       } else {
-        queryUrl = `http://etestapi.test.eminenttechnology.com/api/Equipment/search?name=${searchQuery}`
+        queryUrl = `https://api-inventory-app.herokuapp.com/inventories/search?name=${searchQuery}`
       }
       return this.$http.get(queryUrl)
         .then(response => response.json())
@@ -27,16 +27,16 @@ export const equipmentEventBus = new Vue({
         })
     },
     getEquipment (id) {
-      return this.$http.get(`http://etestapi.test.eminenttechnology.com/api/Equipment/${id}`)
+      return this.$http.get(`https://api-inventory-app.herokuapp.com/inventories/${id}`)
     },
     deleteEquipment (id) {
-      return this.$http.delete(`http://etestapi.test.eminenttechnology.com/api/Equipment/${id}`)
+      return this.$http.delete(`https://api-inventory-app.herokuapp.com/inventories/${id}`)
     },
     createEquipment (payload) {
-      return this.$http.post('http://etestapi.test.eminenttechnology.com/api/Equipment', payload)
+      return this.$http.post('https://api-inventory-app.herokuapp.com/inventories', payload)
     },
     editEquipment (id, payload) {
-      return this.$http.put(`http://etestapi.test.eminenttechnology.com/api/Equipment/${id}`, payload)
+      return this.$http.put(`https://api-inventory-app.herokuapp.com/inventories/${id}`, payload)
     }
   }
 })
